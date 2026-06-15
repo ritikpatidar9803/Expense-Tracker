@@ -5,17 +5,14 @@ dotenv.config()
 
 const app = express();
 
-app.get("/test", (req, res) => {
-    res.json({
-        success: true,
-        message: "Test route working"
-    });
-});
+
 
 app.listen(process.env.PORT,()=>console.log(`Server is running on port `+ process.env.PORT));
 
 import mongoose from "mongoose";
-mongoose.connect(process.env.DB_URL)
+mongoose.connect(process.env.DB_URL, {
+  dbName: "expense-tracker"
+})
 .then(()=>console.log("Database Connected !"))
 .catch(()=>console.log("Database not connected"))
 
