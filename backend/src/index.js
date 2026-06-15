@@ -21,10 +21,23 @@ import cookieParser from "cookie-parser";
 app.use(cookieParser());
 
 import cors from 'cors'
-app.use(cors({
-    origin:process.env.DOMAIN,
-    credentials:true
-}))
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://expense-tracker-byritik.netlify.app",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 
 //app level middleware
 import morgan from "morgan";
